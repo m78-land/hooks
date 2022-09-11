@@ -1,6 +1,6 @@
 {
   "name": "@m78/hooks",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Use Your Imagination",
   "keywords": [
     "react",
@@ -9,8 +9,8 @@
   "license": "MIT",
   "main": "index.js",
   "type": "module",
-  "typings": "./src",
-  "repository": "https://github.com/Iixianjie/hooks",
+  "typings": "./",
+  "repository": "https://github.com/m78-land/hooks",
   "files": [
     "**"
   ],
