@@ -1,6 +1,6 @@
-import { useEffect } from 'react';
-import { AnyFunction, __GLOBAL__ } from '@lxjx/utils';
-import { useFn, useSelf } from '@lxjx/hooks';
+import { useEffect } from "react";
+import { AnyFunction, __GLOBAL__ } from "@m78/utils";
+import { useFn, useSelf } from "@m78/hooks";
 
 export interface UseThrottleOption {
   /** true | 在节流开始前调用 */
@@ -24,7 +24,11 @@ const defaultOption = {
  * @returns throttleFn - 经过节流处理后的函数
  * @returns throttleFn.cancel() - 取消节流调用
  */
-export function useThrottle<T extends AnyFunction>(fn: T, wait = 300, options?: UseThrottleOption) {
+export function useThrottle<T extends AnyFunction>(
+  fn: T,
+  wait = 300,
+  options?: UseThrottleOption
+) {
   const self = useSelf({
     last: 0,
     timer: undefined as any,

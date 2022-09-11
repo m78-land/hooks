@@ -125,7 +125,7 @@ interface UseFetchReturns<Data, Payload> {
     newPayload?:
       | Payload
       | React.SyntheticEvent
-      | undefined /* SyntheticEvent是为了直接将send绑定给onClick等时不出现类型错误 */,
+      | undefined /* SyntheticEvent是为了直接将send绑定给onClick等时不出现类型错误 */
   ) => Promise<[any, Data]>;
 }
 ```

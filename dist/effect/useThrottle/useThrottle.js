@@ -1,10 +1,11 @@
-import { __assign } from "tslib";
-import { useEffect } from 'react';
-import { __GLOBAL__ } from '@lxjx/utils';
-import { useFn, useSelf } from '@lxjx/hooks';
+import _object_spread from "@swc/helpers/src/_object_spread.mjs";
+import _to_consumable_array from "@swc/helpers/src/_to_consumable_array.mjs";
+import { useEffect } from "react";
+import { __GLOBAL__ } from "@m78/utils";
+import { useFn, useSelf } from "@m78/hooks";
 var defaultOption = {
     leading: true,
-    trailing: true,
+    trailing: true
 };
 /**
  * 传入一个函数，经过节流处理后返回, 返回函数的内存地址会一直保持不变
@@ -15,26 +16,24 @@ var defaultOption = {
  * @param options.trailing - true | 在节流结束后调用
  * @returns throttleFn - 经过节流处理后的函数
  * @returns throttleFn.cancel() - 取消节流调用
- */
-export function useThrottle(fn, wait, options) {
-    if (wait === void 0) { wait = 300; }
+ */ export function useThrottle(fn) {
+    var wait = arguments.length > 1 && arguments[1] !== void 0 ? arguments[1] : 300, options = arguments.length > 2 ? arguments[2] : void 0;
     var self = useSelf({
         last: 0,
-        timer: undefined,
+        timer: undefined
     });
-    var opt = __assign(__assign({}, defaultOption), options);
-    var cancel = useFn(function () {
+    var opt = _object_spread({}, defaultOption, options);
+    var cancel = useFn(function() {
         if (self.timer) {
             __GLOBAL__.clearTimeout(self.timer);
         }
     });
-    useEffect(function () {
+    useEffect(function() {
         return cancel;
     });
-    var memoFn = useFn(function () {
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
+    var memoFn = useFn(function() {
+        for(var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++){
+            args[_key] = arguments[_key];
         }
         var now = Date.now();
         var diff = now - self.last;
@@ -42,20 +41,19 @@ export function useThrottle(fn, wait, options) {
         if (diff > wait) {
             // last = 0 时视为初次调用
             if (opt.leading || self.last !== 0) {
-                fn.apply(void 0, args);
+                fn.apply(void 0, _to_consumable_array(args));
             }
             self.last = now;
-        }
-        else if (opt.trailing) {
-            self.timer = __GLOBAL__.setTimeout(function () {
-                fn.apply(void 0, args);
+        } else if (opt.trailing) {
+            self.timer = __GLOBAL__.setTimeout(function() {
+                fn.apply(void 0, _to_consumable_array(args));
                 self.last = 0; // 标记下次调用为leading调用
                 __GLOBAL__.clearTimeout(self.timer);
             }, wait);
         }
     });
     var bundle = Object.assign(memoFn, {
-        cancel: cancel,
+        cancel: cancel
     });
     return bundle;
 }

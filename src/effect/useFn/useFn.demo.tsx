@@ -1,6 +1,6 @@
-import React, { useState, useRef } from 'react';
-import { useFn } from '@lxjx/hooks';
-import _throttle from 'lodash/throttle';
+import React, { useState, useRef } from "react";
+import { useFn } from "@m78/hooks";
+import _throttle from "lodash/throttle";
 
 const useFnDemo = () => {
   const [count, setCount] = useState(0);
@@ -16,7 +16,7 @@ const useFnDemo = () => {
     () => {
       setCount(count + 1);
     },
-    f => _throttle(f, 1000),
+    (f) => _throttle(f, 1000)
   );
 
   return (

@@ -1,39 +1,38 @@
-import { useEffect } from 'react';
-import { __GLOBAL__ } from '@lxjx/utils';
-import { useSelf, useFn } from '@lxjx/hooks';
+import _to_consumable_array from "@swc/helpers/src/_to_consumable_array.mjs";
+import { useEffect } from "react";
+import { __GLOBAL__ } from "@m78/utils";
+import { useSelf, useFn } from "@m78/hooks";
 /**
  * 传入一个函数，经过防抖处理后返回, 返回函数的内存地址会一直保持不变
  * @param fn - 待防抖的函数
  * @param wait - 防抖延迟时间
  * @returns debounceFn - 经过防抖处理后的函数
  * @returns debounceFn.cancel() - 取消防抖调用
- */
-export function useDebounce(fn, wait) {
-    if (wait === void 0) { wait = 300; }
+ */ export function useDebounce(fn) {
+    var wait = arguments.length > 1 && arguments[1] !== void 0 ? arguments[1] : 300;
     var self = useSelf({
-        timer: undefined,
+        timer: undefined
     });
-    var cancel = useFn(function () {
+    var cancel = useFn(function() {
         if (self.timer) {
             __GLOBAL__.clearTimeout(self.timer);
         }
     });
-    useEffect(function () {
+    useEffect(function() {
         return cancel;
     });
-    var memoFn = useFn(function () {
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
+    var memoFn = useFn(function() {
+        for(var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++){
+            args[_key] = arguments[_key];
         }
         cancel();
-        self.timer = __GLOBAL__.setTimeout(function () {
-            fn.apply(void 0, args);
+        self.timer = __GLOBAL__.setTimeout(function() {
+            fn.apply(void 0, _to_consumable_array(args));
             __GLOBAL__.clearTimeout(self.timer);
         }, wait);
     });
     var bundle = Object.assign(memoFn, {
-        cancel: cancel,
+        cancel: cancel
     });
     return bundle;
 }

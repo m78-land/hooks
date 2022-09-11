@@ -1,5 +1,5 @@
-import { useEffect, useState } from 'react';
-import { useFn } from '@lxjx/hooks';
+import { useEffect, useState } from "react";
+import { useFn } from "@m78/hooks";
 
 export interface UseMountStateConfig {
   /** true | 如果为true，在第一次启用时才真正挂载内容 */
@@ -14,7 +14,7 @@ export interface UseMountStateConfig {
  * */
 export function useMountState(
   toggle: boolean,
-  { mountOnEnter = true, unmountOnExit = false }: UseMountStateConfig = {},
+  { mountOnEnter = true, unmountOnExit = false }: UseMountStateConfig = {}
 ) {
   const [mount, setMount] = useState(() => {
     // mountOnEnter为false时，强制渲染, 否则取init

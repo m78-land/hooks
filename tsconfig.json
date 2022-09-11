@@ -1,5 +1,30 @@
 {
-  "extends": "./tsconfig.base.json",
-  // 新版的eslint会对不再include的文件报错
-  "include": ["src", "test", "types", ".eslintrc.js"]
+  "compilerOptions": {
+    "baseUrl": "./",
+    "paths": {
+      "@m78/hooks": ["src/index.ts"]
+    },
+    "target": "es5",
+    "lib": ["dom", "dom.iterable", "esnext"],
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "strict": true,
+    "forceConsistentCasingInFileNames": true,
+    "module": "esnext",
+    "moduleResolution": "node",
+    "resolveJsonModule": true,
+    "jsx": "react",
+    "strictPropertyInitialization": false,
+    "importHelpers": true,
+    "skipLibCheck": true,
+    "allowJs": false
+  },
+  "include": ["src/**/*"],
+  // 额外添加来确保不会生成多余的声明文件
+  "exclude": [
+    "./src/**/*.test.tsx",
+    "./src/**/*.test.ts",
+    "./src/**/*.demo.tsx",
+    "./src/**/*.demo.ts"
+  ]
 }

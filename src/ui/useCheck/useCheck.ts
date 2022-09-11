@@ -1,7 +1,13 @@
-import { FormLikeWithExtra, useFn, useFormState, useSelf, UseFormStateConfig } from '@lxjx/hooks';
-import { isArray } from '@lxjx/utils';
-import _difference from 'lodash/difference';
-import { useMemo } from 'react';
+import {
+  FormLikeWithExtra,
+  useFn,
+  useFormState,
+  useSelf,
+  UseFormStateConfig,
+} from "@m78/hooks";
+import { isArray } from "@m78/utils";
+import _difference from "lodash/difference";
+import { useMemo } from "react";
 
 export interface UseCheckConf<T, OPTION>
   extends FormLikeWithExtra<T[], OPTION[]>,
@@ -55,7 +61,9 @@ export interface UseCheckReturns<T, OPTION> {
   unCheckList: (checkList: T[]) => void;
 }
 
-export function useCheck<T, OPTION = T>(conf: UseCheckConf<T, OPTION>): UseCheckReturns<T, OPTION> {
+export function useCheck<T, OPTION = T>(
+  conf: UseCheckConf<T, OPTION>
+): UseCheckReturns<T, OPTION> {
   const { options = [], disables = [], collector, notExistValueTrigger } = conf;
 
   /* ⚠ 用最少的循环实现功能，因为option可能包含巨量的数据 */
@@ -68,7 +76,7 @@ export function useCheck<T, OPTION = T>(conf: UseCheckConf<T, OPTION>): UseCheck
     notExistVal: {} as { [key: string]: { used: boolean; v: T } },
   });
 
-  const triggerKey = conf.triggerKey || 'onChange';
+  const triggerKey = conf.triggerKey || "onChange";
 
   const [checked, setChecked] = useFormState<T[], OPTION[]>(
     {
@@ -76,19 +84,19 @@ export function useCheck<T, OPTION = T>(conf: UseCheckConf<T, OPTION>): UseCheck
       // 截获onChange并自定义更新逻辑
       [triggerKey](val: T[]) {
         // valMapSync(val); 强控制时在这里同步会有问题，统一转移到effect中
-        conf[triggerKey as 'onChange']?.(val, getCheckedOptions(val));
+        conf[triggerKey as "onChange"]?.(val, getCheckedOptions(val));
       },
     },
     [],
     {
       ...conf,
-    },
+    }
   );
 
   /** 提取所有选项为基础类型值, 基础值数组操作更方便 */
   const items = useMemo(() => {
     return collector
-      ? options.map(item => {
+      ? options.map((item) => {
           const v = collector(item);
           self.optMap[String(v)] = item;
           return collector(item);
@@ -155,7 +163,7 @@ export function useCheck<T, OPTION = T>(conf: UseCheckConf<T, OPTION>): UseCheck
   });
 
   const toggleAll = useFn(() => {
-    const reverse = items.filter(item => {
+    const reverse = items.filter((item) => {
       const _isDisabled = isDisabled(item);
       const _isChecked = isChecked(item);
       if (_isDisabled) return _isChecked; // 如果禁用则返回、
@@ -168,33 +176,33 @@ export function useCheck<T, OPTION = T>(conf: UseCheckConf<T, OPTION>): UseCheck
     if (!isArray(list)) return;
     if (!list.length) return;
     // 排除禁用项和已选中项
-    const newList = list.filter(item => {
+    const newList = list.filter((item) => {
       if (isDisabled(item)) return false;
       if (isChecked(item)) return false; // isChecked消耗比isDisabled高，所以用`||`判断
       return true;
     });
 
-    setChecked(prev => [...prev, ...newList]);
+    setChecked((prev) => [...prev, ...newList]);
   });
 
   const unCheckList = useFn((removeList: T[]) => {
     if (!isArray(removeList)) return;
     if (!removeList.length) return;
     // 排除禁用项和未选中项
-    const rmList = removeList.filter(item => {
+    const rmList = removeList.filter((item) => {
       if (isDisabled(item)) return false;
       if (!isChecked(item)) return false;
       return true;
     });
 
-    setChecked(prev => {
+    setChecked((prev) => {
       return _difference(prev, rmList);
     });
   });
 
   const setCheck = useFn((nextChecked: T[]) => {
     // 只选中列表中未被禁用的项
-    const extra = nextChecked.filter(item => {
+    const extra = nextChecked.filter((item) => {
       if (isDisabled(item)) {
         return isChecked(item);
       }
@@ -210,7 +218,7 @@ export function useCheck<T, OPTION = T>(conf: UseCheckConf<T, OPTION>): UseCheck
 
   /** 获取可用选项，禁用项会以原样返回， 传入false时，返回所有未禁用项 */
   function getEnables(isCheck = true) {
-    return items.filter(item => {
+    return items.filter((item) => {
       const _isDisabled = isDisabled(item);
       if (_isDisabled) {
         return isChecked(item);
@@ -221,11 +229,11 @@ export function useCheck<T, OPTION = T>(conf: UseCheckConf<T, OPTION>): UseCheck
 
   /** 获取所有已选中的选项 */
   function getCheckedOptions(_checked: T[]) {
-    if (!collector) return (_checked as unknown) as OPTION[];
+    if (!collector) return _checked as unknown as OPTION[];
 
     const temp: OPTION[] = [];
 
-    _checked.forEach(item => {
+    _checked.forEach((item) => {
       const c = self.optMap[String(item)];
       if (c) {
         temp.push(c);
@@ -239,7 +247,7 @@ export function useCheck<T, OPTION = T>(conf: UseCheckConf<T, OPTION>): UseCheck
   function getCheckStatus() {
     let checkLen = 0;
     const maxLength = items.length;
-    items.forEach(item => {
+    items.forEach((item) => {
       if (isChecked(item)) {
         checkLen++;
       }
@@ -261,7 +269,7 @@ export function useCheck<T, OPTION = T>(conf: UseCheckConf<T, OPTION>): UseCheck
     self.valMap = {};
     self.notExistVal = {};
 
-    _checked.forEach(item => {
+    _checked.forEach((item) => {
       const strItem = String(item);
 
       const c = self.optMap[strItem];

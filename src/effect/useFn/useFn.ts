@@ -1,5 +1,5 @@
-import { useRef, useMemo } from 'react';
-import { AnyFunction } from '@lxjx/utils';
+import { useRef, useMemo } from "react";
+import { AnyFunction } from "@m78/utils";
 
 /**
  * 用于代替`useCallback`，使回调函数的引用地址永久不变, 从而减少消费组件不必要的更新。
@@ -9,7 +9,11 @@ import { AnyFunction } from '@lxjx/utils';
  * @param deps - 依赖数组，如果传入，其中任意值改变都会重载缓存的fn，可以用来更新wrapper包装的函数
  * @returns - 经过memo化的函数
  */
-export function useFn<T extends AnyFunction>(fn: T, wrapper?: (fn: T) => T, deps = [] as any[]) {
+export function useFn<T extends AnyFunction>(
+  fn: T,
+  wrapper?: (fn: T) => T,
+  deps = [] as any[]
+) {
   const fnRef = useRef<T>();
   const memoFnRef = useRef<T>(null!);
 

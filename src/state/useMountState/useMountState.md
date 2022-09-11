@@ -29,5 +29,8 @@ interface UseMountStateConfig {
 ## API
 
 ```ts
-function useMountState(toggle: boolean, config?: UseMountStateConfig): [boolean, unmount];
+function useMountState(
+  toggle: boolean,
+  config?: UseMountStateConfig
+): [boolean, unmount];
 ```

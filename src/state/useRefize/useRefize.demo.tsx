@@ -1,5 +1,5 @@
-import React, { useState, useCallback } from 'react';
-import { useRefize } from '@lxjx/hooks';
+import React, { useState, useCallback } from "react";
+import { useRefize } from "@m78/hooks";
 
 const useRefizeDemo = () => {
   const [count, setCount] = useState(0);
@@ -15,7 +15,9 @@ const useRefizeDemo = () => {
   return (
     <div>
       <h3>useRefizeDemo</h3>
-      <button onClick={() => setCount(prev => prev + 1)}>change {count}</button>
+      <button onClick={() => setCount((prev) => prev + 1)}>
+        change {count}
+      </button>
       <button onClick={log}>log</button>
     </div>
   );

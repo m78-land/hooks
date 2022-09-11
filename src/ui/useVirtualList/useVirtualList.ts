@@ -1,5 +1,5 @@
-import { RefObject, useEffect, useMemo, useRef } from 'react';
-import { isFunction } from '@lxjx/utils';
+import { RefObject, useEffect, useMemo, useRef } from "react";
+import { isFunction } from "@m78/utils";
 import {
   createEvent,
   getRefDomOrDom,
@@ -8,8 +8,8 @@ import {
   UseScrollMeta,
   useSelf,
   useSetState,
-} from '@lxjx/hooks';
-import _debounce from 'lodash/debounce';
+} from "@m78/hooks";
+import _debounce from "lodash/debounce";
 
 export interface VirtualListOption<Item> {
   /** 需要进行虚拟滚动的列表 */
@@ -79,7 +79,10 @@ export function useVirtualList<Item = any>(option: VirtualListOption<Item>) {
   const wrapRef = useRef<any>(null!);
 
   // 统一通知Render更新状态
-  const updateEvent = useMemo(() => createEvent<(state: Partial<State<Item>>) => void>(), []);
+  const updateEvent = useMemo(
+    () => createEvent<(state: Partial<State<Item>>) => void>(),
+    []
+  );
 
   const self = useSelf({
     scrolling: false,
@@ -115,25 +118,25 @@ export function useVirtualList<Item = any>(option: VirtualListOption<Item>) {
 
   /** 使用render组件来减少hook对消费组件的频繁更新 */
   const Render = useMemo(
-    () => ({ children }: VirtualListRenderProps<Item>) => {
-      // eslint-disable-next-line react-hooks/rules-of-hooks
-      const [state, setState] = useSetState<State<Item>>({
-        list: [],
-        scrolling: false,
-      });
+    () =>
+      ({ children }: VirtualListRenderProps<Item>) => {
+        const [state, setState] = useSetState<State<Item>>({
+          list: [],
+          scrolling: false,
+        });
 
-      updateEvent.useEvent(setState);
+        updateEvent.useEvent(setState);
 
-      return children(state);
-    },
-    [],
+        return children(state);
+      },
+    []
   );
 
   // 检测必须的dom是否存在，不存在时抛异常
   useEffect(() => {
     if (disabled) return;
     if (!getRefDomOrDom(option.wrapRef, wrapRef) || !scroller.ref.current) {
-      throw Error('useVirtualList(...) -> wrap or container is not gets');
+      throw Error("useVirtualList(...) -> wrap or container is not gets");
     }
   }, [disabled]);
 
@@ -141,7 +144,7 @@ export function useVirtualList<Item = any>(option: VirtualListOption<Item>) {
   useEffect(() => {
     if (disabled) return;
     handleScroll(scroller.get(), true);
-    scroller.ref.current && (scroller.ref.current.style.overflowY = 'auto');
+    scroller.ref.current && (scroller.ref.current.style.overflowY = "auto");
   }, [disabled, fmtList, height]);
 
   // 通知滚动结束
@@ -152,7 +155,7 @@ export function useVirtualList<Item = any>(option: VirtualListOption<Item>) {
         scrolling: false,
       });
     },
-    fn => _debounce(fn, 100),
+    (fn) => _debounce(fn, 100)
   );
 
   /** 核心混动逻辑 */
@@ -176,7 +179,9 @@ export function useVirtualList<Item = any>(option: VirtualListOption<Item>) {
     if (!wrapEl || !meta.el) return;
 
     if (keepAlive) {
-      keepAliveList = fmtList.filter((item, index) => keepAlive(item.data, index));
+      keepAliveList = fmtList.filter((item, index) =>
+        keepAlive(item.data, index)
+      );
     }
 
     // 开始索引
@@ -211,8 +216,8 @@ export function useVirtualList<Item = any>(option: VirtualListOption<Item>) {
     const nextList: VirtualList<Item> = fmtList.slice(start, end);
 
     if (keepAliveList.length) {
-      keepAliveList.forEach(item => {
-        const has = nextList.find(it => it.key === item.key);
+      keepAliveList.forEach((item) => {
+        const has = nextList.find((it) => it.key === item.key);
 
         if (!has) {
           if (item.index < start) nextList.unshift(item);
@@ -252,7 +257,7 @@ export function useVirtualList<Item = any>(option: VirtualListOption<Item>) {
     const nextEnd = Math.min(
       /* 索引为0时不添加 */
       end + overscan /* slice是尾闭合的，所以要多取一位 */,
-      fmtList.length,
+      fmtList.length
     );
 
     return [nextStart, nextEnd] as const;

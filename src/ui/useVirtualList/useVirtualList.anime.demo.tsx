@@ -1,7 +1,7 @@
-import React from 'react';
-import { useVirtualList } from '@lxjx/hooks';
+import React from "react";
+import { useVirtualList } from "@m78/hooks";
 
-import sty from './style.module.css';
+import sty from "./style.module.css";
 
 const list = Array.from({ length: 300000 }).map((it, ind) => ind);
 
@@ -16,21 +16,21 @@ const useVirtualListDemo = () => {
       style={{
         height: 300, // 滚动容器必须包含高度
         width: 400,
-        overflowX: 'hidden',
+        overflowX: "hidden",
       }}
       className={sty.container}
       ref={virtual.containerRef}
     >
       <div className={sty.wrap} ref={virtual.wrapRef}>
         <virtual.Render>
-          {state =>
-            state.list.map(item => (
+          {(state) =>
+            state.list.map((item) => (
               <div
                 key={item.key}
                 className={`${sty.item} ${sty.animeItem}`}
                 style={{
                   height: item.size,
-                  backgroundColor: item.index % 2 === 0 ? '#f8f8f0' : undefined,
+                  backgroundColor: item.index % 2 === 0 ? "#f8f8f0" : undefined,
                 }}
               >
                 Row: {item.data}

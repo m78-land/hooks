@@ -1,5 +1,5 @@
-import React, { useRef, useState } from 'react';
-import { useClickAway } from './useClickAway';
+import React, { useRef, useState } from "react";
+import { useClickAway } from "@m78/hooks";
 
 const UseClickAwayDemo = () => {
   const [count, setCount] = useState(0);
@@ -11,7 +11,7 @@ const UseClickAwayDemo = () => {
     target: [b1, b2],
     onTrigger(e) {
       console.log(e);
-      setCount(prev => prev + 1);
+      setCount((prev) => prev + 1);
     },
   });
 

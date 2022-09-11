@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { useSame } from '@lxjx/hooks';
+import React, { useState } from "react";
+import { useSame } from "@m78/hooks";
 
 interface SameComponentProps {
   flag: string;
@@ -9,7 +9,7 @@ interface SameComponentProps {
 function SameComponent({ flag, show = false }: SameComponentProps) {
   const [num, setNum] = useState(() => Math.random());
 
-  const [index, instances, id] = useSame('same_component', {
+  const [index, instances, id] = useSame("same_component", {
     meta: {
       flag,
       show,
@@ -21,7 +21,7 @@ function SameComponent({ flag, show = false }: SameComponentProps) {
   });
 
   return (
-    <div style={{ margin: '24px 0' }} onClick={() => setNum(Math.random())}>
+    <div style={{ margin: "24px 0" }} onClick={() => setNum(Math.random())}>
       <h3>该组件位于实例第 {index} 位</h3>
       <div>
         组件共享参数: <pre>{JSON.stringify(instances, null, 2)}</pre>
@@ -38,9 +38,15 @@ const useSameDemo = () => {
 
   return (
     <div>
-      <button onClick={() => set1(prev => !prev)}>实例1 | {show1.toString()}</button>
-      <button onClick={() => set2(prev => !prev)}>实例2 | {show2.toString()}</button>
-      <button onClick={() => set3(prev => !prev)}>实例3 | {show3.toString()}</button>
+      <button onClick={() => set1((prev) => !prev)}>
+        实例1 | {show1.toString()}
+      </button>
+      <button onClick={() => set2((prev) => !prev)}>
+        实例2 | {show2.toString()}
+      </button>
+      <button onClick={() => set3((prev) => !prev)}>
+        实例3 | {show3.toString()}
+      </button>
 
       <SameComponent flag="我是第一个组件" show={show1} />
       <SameComponent flag="我是第二个组件" show={show2} />

@@ -1,9 +1,9 @@
-import { RefObject, useEffect, useRef, useState } from 'react';
-import ResizeObserver from 'resize-observer-polyfill';
-import debounce from 'lodash/debounce';
-import { getRefDomOrDom, useFn, useIsUnmountState } from '@lxjx/hooks';
+import { RefObject, useEffect, useRef, useState } from "react";
+import ResizeObserver from "resize-observer-polyfill";
+import debounce from "lodash/debounce";
+import { getRefDomOrDom, useFn, useIsUnmountState } from "@m78/hooks";
 
-export interface UseMeasureBound extends Omit<DOMRectReadOnly, 'toJSON'> {
+export interface UseMeasureBound extends Omit<DOMRectReadOnly, "toJSON"> {
   /** entry.contentRect中的宽高为contentSize, 所以额外提供此项 */
   offsetHeight: number;
   /** entry.contentRect中的宽高为contentSize, 所以额外提供此项 */
@@ -20,7 +20,7 @@ export interface UseMeasureBound extends Omit<DOMRectReadOnly, 'toJSON'> {
  * */
 export function useMeasure<T extends Element = HTMLElement>(
   target?: HTMLElement | RefObject<HTMLElement>,
-  debounceDelay?: number,
+  debounceDelay?: number
 ) {
   const ref = useRef<T>(null!);
 
@@ -39,7 +39,7 @@ export function useMeasure<T extends Element = HTMLElement>(
     offsetWidth: 0,
   });
 
-  const cb: ResizeObserverCallback = useFn(
+  const cb = useFn(
     ([entry]) => {
       const rect = entry.contentRect;
       !isUnmount() &&
@@ -57,13 +57,13 @@ export function useMeasure<T extends Element = HTMLElement>(
           offsetWidth: (entry.target as HTMLElement).offsetWidth,
         });
     },
-    fn => {
+    (fn) => {
       if (debounceDelay) {
         return debounce(fn, debounceDelay);
       }
       return fn;
     },
-    [debounceDelay],
+    [debounceDelay]
   );
 
   const [ro] = useState(() => new ResizeObserver(cb));

@@ -1,7 +1,7 @@
-import { __GLOBAL__, isEmpty, isFunction, isObject } from '@lxjx/utils';
-import _debounce from 'lodash/debounce';
-import _throttle from 'lodash/throttle';
-import React, { useEffect, useState } from 'react';
+import { __GLOBAL__, isEmpty, isFunction, isObject } from "@m78/utils";
+import _debounce from "lodash/debounce";
+import _throttle from "lodash/throttle";
+import React, { useEffect, useState } from "react";
 import {
   useEffectEqual,
   useFn,
@@ -9,7 +9,7 @@ import {
   useSetState,
   useStorageState,
   SetStateBase,
-} from '@lxjx/hooks';
+} from "@m78/hooks";
 
 const GLOBAL = __GLOBAL__ as Window;
 
@@ -85,7 +85,7 @@ interface UseFetchReturns<Data, Payload> {
     newPayload?:
       | Payload
       | React.SyntheticEvent
-      | undefined /* SyntheticEvent是为了直接将send绑定给onClick等时不出现类型错误 */,
+      | undefined /* SyntheticEvent是为了直接将send绑定给onClick等时不出现类型错误 */
   ) => Promise<[any, Data]>;
 }
 
@@ -93,14 +93,16 @@ interface UseFetchReturns<Data, Payload> {
 function isSyntheticEvent(arg: any) {
   if (!arg) return false;
 
-  return isObject(arg) && 'nativeEvent' in arg && 'target' in arg && 'type' in arg;
+  return (
+    isObject(arg) && "nativeEvent" in arg && "target" in arg && "type" in arg
+  );
 }
 
 function useFetch<Data = any, Payload = any>(
   /** 一个Promise return函数或async函数, 当不为函数时不会走请求流程 */
   method?: ((...arg: any[]) => Promise<Data>) | any,
   /** 配置项 */
-  options = {} as UseFetchOptions<Data, Payload>,
+  options = {} as UseFetchOptions<Data, Payload>
 ) {
   const self = useSelf({
     /** 请求的唯一标示，在每一次请求开始前更新，并作为请求有效性的凭据 */
@@ -149,9 +151,13 @@ function useFetch<Data = any, Payload = any>(
     };
   }, []);
 
-  const [payload, setPayload] = useStorageState(`${cacheKey}_FETCH_PAYLOAD`, initPayload, {
-    disabled: !isCache,
-  });
+  const [payload, setPayload] = useStorageState(
+    `${cacheKey}_FETCH_PAYLOAD`,
+    initPayload,
+    {
+      disabled: !isCache,
+    }
+  );
 
   const [data, setData] = useStorageState(`${cacheKey}_FETCH_DATA`, initData, {
     disabled: !isCache,
@@ -162,7 +168,7 @@ function useFetch<Data = any, Payload = any>(
   const fetchHandel = useFn(
     async function _fetchHandel(args: any, isUpdate = false) {
       if (!pass) {
-        return [new Error('the request has been ignored'), null];
+        return [new Error("the request has been ignored"), null];
       }
 
       self.lastFetch = Date.now();
@@ -176,7 +182,7 @@ function useFetch<Data = any, Payload = any>(
         cancel();
         onTimeout?.();
         setState({
-          ...getResetState('timeout', true),
+          ...getResetState("timeout", true),
         });
       }, timeout);
 
@@ -186,7 +192,7 @@ function useFetch<Data = any, Payload = any>(
       // 减少更新次数
       if (!state.loading) {
         setState({
-          ...getResetState('loading', true),
+          ...getResetState("loading", true),
         });
       }
 
@@ -194,7 +200,7 @@ function useFetch<Data = any, Payload = any>(
         const res = await method(args);
         if (cID === self.fetchID) {
           setState({
-            ...getResetState('loading', false),
+            ...getResetState("loading", false),
           });
           setData(res);
           onSuccess?.(res, isUpdate);
@@ -203,7 +209,7 @@ function useFetch<Data = any, Payload = any>(
       } catch (err) {
         if (cID === self.fetchID) {
           setState({
-            ...getResetState('error', err),
+            ...getResetState("error", err),
           });
           onError?.(err);
           return [err, undefined];
@@ -219,9 +225,9 @@ function useFetch<Data = any, Payload = any>(
       }
 
       // 仅用于保证类型正确
-      return [new Error('never execute'), null];
+      return [new Error("never execute"), null];
     },
-    fn => {
+    (fn) => {
       if (throttleInterval) {
         return _throttle(fn, throttleInterval, { trailing: false }); // 对于请求，应该禁止尾随调用
       }
@@ -231,7 +237,7 @@ function useFetch<Data = any, Payload = any>(
       }
 
       return fn as any;
-    },
+    }
   );
 
   /** 手动发起请求 */
@@ -242,7 +248,7 @@ function useFetch<Data = any, Payload = any>(
 
   /** 监听param改变并执行缓存更新，发起请求 */
   useEffectEqual(() => {
-    if (!('param' in options)) return;
+    if (!("param" in options)) return;
     if (self.fetchCount === 0 || manual) return;
     fetchHandel(getActualPayload(), false); // 走到这里说明参数已经改变了
   }, [param]);
@@ -278,13 +284,13 @@ function useFetch<Data = any, Payload = any>(
         timer && clearInterval(timer);
       };
     },
-    [pollingInterval, polling],
+    [pollingInterval, polling]
   );
 
   /** 接受可选的新payload，并根据条件返回传递给fetchHandel的参数(使用param或payload) */
   function getActualPayload(newPayload?: Payload) {
     // 包含param配置项，使用当前param更新
-    if ('param' in options) {
+    if ("param" in options) {
       return param;
     }
 
@@ -322,7 +328,7 @@ function useFetch<Data = any, Payload = any>(
     });
   }
 
-  return ({
+  return {
     ...state,
     send,
     data,
@@ -332,7 +338,7 @@ function useFetch<Data = any, Payload = any>(
     cancel,
     polling,
     setPolling,
-  } as any) as UseFetchReturns<Data, Payload>;
+  } as any as UseFetchReturns<Data, Payload>;
 }
 
 export { useFetch };

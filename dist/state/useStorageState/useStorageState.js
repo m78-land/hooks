@@ -1,49 +1,40 @@
-import { __assign } from "tslib";
-import { useFn } from '@lxjx/hooks';
-import { __GLOBAL__ } from '@lxjx/utils';
-import { useState } from 'react';
-var BASE_KEY = 'USE_STORAGE_CACHE';
+import _object_spread from "@swc/helpers/src/_object_spread.mjs";
+import _sliced_to_array from "@swc/helpers/src/_sliced_to_array.mjs";
+import { useFn } from "@m78/hooks";
+import { __GLOBAL__ } from "@m78/utils";
+import { useState } from "react";
+var BASE_KEY = "USE_STORAGE_CACHE";
 var storagMethod = {
     local: __GLOBAL__.localStorage,
-    session: __GLOBAL__.sessionStorage,
+    session: __GLOBAL__.sessionStorage
 };
-function setStorage(key, val, type) {
-    if (type === void 0) { type = 'session'; }
-    if (val === undefined)
-        return;
+function setStorage(key, val) {
+    var type = arguments.length > 2 && arguments[2] !== void 0 ? arguments[2] : "session";
+    if (val === undefined) return;
     var method = storagMethod[type];
-    if (!method)
-        return;
-    method.setItem(BASE_KEY + "_" + key.toUpperCase(), JSON.stringify(val));
+    if (!method) return;
+    method.setItem("".concat(BASE_KEY, "_").concat(key.toUpperCase()), JSON.stringify(val));
 }
-function getStorage(key, type) {
-    if (type === void 0) { type = 'session'; }
+function getStorage(key) {
+    var type = arguments.length > 1 && arguments[1] !== void 0 ? arguments[1] : "session";
     var method = storagMethod[type];
-    if (!method)
-        return;
-    var cache = method.getItem(BASE_KEY + "_" + key.toUpperCase());
+    if (!method) return;
+    var cache = method.getItem("".concat(BASE_KEY, "_").concat(key.toUpperCase()));
     return cache === null ? cache : JSON.parse(cache);
 }
-function remove(key, type) {
-    if (type === void 0) { type = 'session'; }
+function remove(key) {
+    var type = arguments.length > 1 && arguments[1] !== void 0 ? arguments[1] : "session";
     var method = storagMethod[type];
-    if (!method)
-        return;
-    method.removeItem(BASE_KEY + "_" + key.toUpperCase());
+    if (!method) return;
+    method.removeItem("".concat(BASE_KEY, "_").concat(key.toUpperCase()));
 }
 var defaultOptions = {
-    type: 'session',
-    disabled: false,
+    type: "session",
+    disabled: false
 };
-function useStorageBase(
-/** 缓存key */
-key, 
-/** 初始状态 */
-initState, 
-/** 其他选项 */
-options) {
-    var opt = __assign(__assign({}, defaultOptions), options);
-    var _a = useState(function () {
+function useStorageBase(/** 缓存key */ key, /** 初始状态 */ initState, /** 其他选项 */ options) {
+    var opt = _object_spread({}, defaultOptions, options);
+    var ref = _sliced_to_array(useState(function() {
         if (!opt.disabled) {
             var cache = getStorage(key, opt.type);
             if (cache !== null) {
@@ -58,24 +49,26 @@ options) {
         }
         !opt.disabled && setStorage(key, initState, opt.type);
         return initState;
-    }), state = _a[0], setState = _a[1];
-    var memoSetState = useFn(function (patch) {
+    }), 2), state = ref[0], setState = ref[1];
+    var memoSetState = useFn(function(patch) {
         if (patch instanceof Function) {
-            setState(function (prev) {
+            setState(function(prev) {
                 var patchRes = patch(prev);
                 !opt.disabled && setStorage(key, patchRes, opt.type);
                 return patchRes;
             });
-        }
-        else {
+        } else {
             !opt.disabled && setStorage(key, patch, opt.type);
             setState(patch);
         }
     });
-    return [state, memoSetState];
+    return [
+        state,
+        memoSetState
+    ];
 }
 export var useStorageState = Object.assign(useStorageBase, {
     get: getStorage,
     set: setStorage,
-    remove: remove,
+    remove: remove
 });

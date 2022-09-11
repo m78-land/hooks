@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { usePrev } from '@lxjx/hooks';
+import React, { useState } from "react";
+import { usePrev } from "@m78/hooks";
 
 const UsePrevDemo = () => {
   const [count, setCount] = useState(0);
@@ -9,7 +9,7 @@ const UsePrevDemo = () => {
   return (
     <div>
       <div>
-        <button onClick={() => setCount(p => p + 1)}>add</button>
+        <button onClick={() => setCount((p) => p + 1)}>add</button>
       </div>
 
       <hr />

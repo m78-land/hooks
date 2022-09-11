@@ -1,6 +1,6 @@
-import { useEffect, useMemo, useRef } from 'react';
-import { createRandString, isArray } from '@lxjx/utils';
-import { createEvent, useUpdateEffect, useUpdate } from '@lxjx/hooks';
+import { useEffect, useMemo, useRef } from "react";
+import { createRandString, isArray } from "@m78/utils";
+import { createEvent, useUpdateEffect, useUpdate } from "@m78/hooks";
 
 /** 单个组件实例 */
 export interface SameItem<Meta = any> {
@@ -70,7 +70,7 @@ export function useSame<Meta = any>(
     deps?: any[];
     enable?: boolean;
     updateDisabled?: boolean;
-  },
+  }
 ): Returns<Meta> {
   const conf = {
     ...defaultConfig,
@@ -84,7 +84,10 @@ export function useSame<Meta = any>(
 
   /* 在某个组件更新了sameMap后，需要通知其他相应的以最新状态更新组件 */
   const update = useUpdate(true);
-  const { emit, useEvent } = useMemo(() => getEvent(`${key}_same_custom_event`), []);
+  const { emit, useEvent } = useMemo(
+    () => getEvent(`${key}_same_custom_event`),
+    []
+  );
 
   useMemo(() => {
     // 创建item
@@ -137,8 +140,8 @@ export function useSame<Meta = any>(
   function get() {
     const [current] = getCurrent();
 
-    const filter = current.filter(item => item.enable);
-    const index = filter.findIndex(item => item.id === id);
+    const filter = current.filter((item) => item.enable);
+    const index = filter.findIndex((item) => item.id === id);
 
     return [index, filter, id] as const;
   }
@@ -150,7 +153,7 @@ export function useSame<Meta = any>(
       sameMap[key] = [];
     }
 
-    const index = sameMap[key].findIndex(item => item.id === id);
+    const index = sameMap[key].findIndex((item) => item.id === id);
 
     return [sameMap[key], index] as const;
   }
@@ -190,7 +193,11 @@ export function useSame<Meta = any>(
 
   const returns = get();
 
-  lastReturn.current = [returns[0], [...returns[1]] /* 需要存储拷贝 */, returns[2]];
+  lastReturn.current = [
+    returns[0],
+    [...returns[1]] /* 需要存储拷贝 */,
+    returns[2],
+  ];
 
   return returns;
 }

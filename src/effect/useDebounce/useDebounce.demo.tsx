@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
-import { useDebounce } from '@lxjx/hooks';
+import React, { useState } from "react";
+import { useDebounce } from "@m78/hooks";
 
 const useThrottleDemo = () => {
-  const [val, setVal] = useState('');
+  const [val, setVal] = useState("");
 
   const handle = useDebounce((el: HTMLInputElement) => {
     setVal(el.value);

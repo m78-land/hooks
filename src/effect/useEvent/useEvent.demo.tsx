@@ -1,12 +1,12 @@
-import React, { useState } from 'react';
-import { createEvent } from '@lxjx/hooks';
+import React, { useState } from "react";
+import { createEvent } from "@m78/hooks";
 
 const { useEvent, emit } = createEvent<(arg: number) => void>();
 
 function AChild() {
   const [count, setCount] = useState(0);
 
-  useEvent(num => {
+  useEvent((num) => {
     setCount(num);
   });
 

@@ -1,9 +1,9 @@
-import { RefObject, useEffect, useRef } from 'react';
+import { RefObject, useEffect, useRef } from "react";
 
-import { isNumber, isDom } from '@lxjx/utils';
-import _clamp from 'lodash/clamp';
-import { getRefDomOrDom, useSelf, useThrottle } from '@lxjx/hooks';
-import { useSpring, config } from 'react-spring';
+import { isNumber, isDom } from "@m78/utils";
+import _clamp from "lodash/clamp";
+import { getRefDomOrDom, useSelf, useThrottle } from "@m78/hooks";
+import { useSpring, config } from "react-spring";
 
 interface UseScrollOptions {
   /** 指定滚动元素或ref，el、el.current、ref.current取值，只要有任意一个为dom元素则返回, 默认的滚动元素是documentElement */
@@ -80,7 +80,7 @@ export function useScroll<ElType extends HTMLElement>(
     offsetX,
     offsetY,
     touchOffset = 0,
-  } = {} as UseScrollOptions,
+  } = {} as UseScrollOptions
 ) {
   // 用于返回的节点获取ref
   const ref = useRef<ElType>(null);
@@ -115,10 +115,10 @@ export function useScroll<ElType extends HTMLElement>(
     /* 坑: 页面级滚动scroll事件绑在documentElement和body上无效, 只能绑在window上 */
     const scrollEl = elIsDoc(sEl) ? window : sEl;
 
-    scrollEl.addEventListener('scroll', scrollHandle);
+    scrollEl.addEventListener("scroll", scrollHandle);
 
     return () => {
-      scrollEl.removeEventListener('scroll', scrollHandle);
+      scrollEl.removeEventListener("scroll", scrollHandle);
     };
   }, [el, ref.current]);
 
@@ -133,12 +133,12 @@ export function useScroll<ElType extends HTMLElement>(
       }
     }
 
-    sEl.addEventListener('wheel', wheelHandle);
-    sEl.addEventListener('touchmove', wheelHandle);
+    sEl.addEventListener("wheel", wheelHandle);
+    sEl.addEventListener("touchmove", wheelHandle);
 
     return () => {
-      sEl.removeEventListener('wheel', wheelHandle);
-      sEl.removeEventListener('touchmove', wheelHandle);
+      sEl.removeEventListener("wheel", wheelHandle);
+      sEl.removeEventListener("touchmove", wheelHandle);
     };
   }, [el, ref.current]);
 
@@ -154,7 +154,11 @@ export function useScroll<ElType extends HTMLElement>(
   }
 
   /** 动画滚动到指定位置 */
-  function animateTo(sEl: HTMLElement, next: UseScrollPosBase, now: UseScrollPosBase) {
+  function animateTo(
+    sEl: HTMLElement,
+    next: UseScrollPosBase,
+    now: UseScrollPosBase
+  ) {
     const isDoc = elIsDoc(sEl);
 
     spApi({
@@ -210,7 +214,7 @@ export function useScroll<ElType extends HTMLElement>(
       }
     }
 
-    if ('x' in nextPos || 'y' in nextPos) {
+    if ("x" in nextPos || "y" in nextPos) {
       const isDoc = elIsDoc(scroller);
 
       if (immediate) {
@@ -250,11 +254,11 @@ export function useScroll<ElType extends HTMLElement>(
     let targetEl: HTMLElement | null;
 
     if (!sEl.getBoundingClientRect) {
-      console.warn('The browser does not support `getBoundingClientRect` API');
+      console.warn("The browser does not support `getBoundingClientRect` API");
       return;
     }
 
-    if (typeof arg === 'string') {
+    if (typeof arg === "string") {
       targetEl = getEl().querySelector(arg);
     } else {
       targetEl = arg;
@@ -286,8 +290,12 @@ export function useScroll<ElType extends HTMLElement>(
 
     const sEl = getEl();
 
-    let x = isDoc ? self.docEl.scrollLeft + self.bodyEl.scrollLeft : sEl.scrollLeft;
-    let y = isDoc ? self.docEl.scrollTop + self.bodyEl.scrollTop : sEl.scrollTop;
+    let x = isDoc
+      ? self.docEl.scrollLeft + self.bodyEl.scrollLeft
+      : sEl.scrollLeft;
+    let y = isDoc
+      ? self.docEl.scrollTop + self.bodyEl.scrollTop
+      : sEl.scrollTop;
 
     /* chrome高分屏+缩放时，滚动值会是小数，想上取整防止计算错误 */
     x = Math.ceil(x);

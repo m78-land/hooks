@@ -1,5 +1,5 @@
-import React from 'react';
-import { useQueue } from '@lxjx/hooks';
+import React from "react";
+import { useQueue } from "@m78/hooks";
 
 let count = 0;
 
@@ -41,21 +41,22 @@ const UseQueueDemo = () => {
         <button onClick={() => queue.remove([3, 4, 5])}>remove</button>
       </div>
 
-      <div style={{ display: 'flex', textAlign: 'center' }}>
+      <div style={{ display: "flex", textAlign: "center" }}>
         <div
           style={{
             width: 140,
-            border: '1px solid #eee',
+            border: "1px solid #eee",
           }}
         >
           <h3>所有消息</h3>
-          {queue.list.map(item => (
+          {queue.list.map((item) => (
             <div
               key={item.id}
               onClick={() => queue.jump(item.id)}
               style={{
-                padding: '4px 12px',
-                border: item === queue.current ? '1px solid red' : '1px solid #ccc',
+                padding: "4px 12px",
+                border:
+                  item === queue.current ? "1px solid red" : "1px solid #ccc",
               }}
             >
               {item.text}-{item.id}
@@ -65,16 +66,17 @@ const UseQueueDemo = () => {
         <div
           style={{
             width: 140,
-            border: '1px solid #eee',
+            border: "1px solid #eee",
           }}
         >
           <h3>已使用消息</h3>
-          {queue.leftList.map(item => (
+          {queue.leftList.map((item) => (
             <div
               key={item.id}
               style={{
-                padding: '4px 12px',
-                border: item === queue.current ? '1px solid red' : '1px solid #ccc',
+                padding: "4px 12px",
+                border:
+                  item === queue.current ? "1px solid red" : "1px solid #ccc",
               }}
             >
               {item.text}-{item.id}
@@ -84,16 +86,17 @@ const UseQueueDemo = () => {
         <div
           style={{
             width: 140,
-            border: '1px solid #eee',
+            border: "1px solid #eee",
           }}
         >
           <h3>未使用消息</h3>
-          {queue.rightList.map(item => (
+          {queue.rightList.map((item) => (
             <div
               key={item.id}
               style={{
-                padding: '4px 12px',
-                border: item === queue.current ? '1px solid red' : '1px solid #ccc',
+                padding: "4px 12px",
+                border:
+                  item === queue.current ? "1px solid red" : "1px solid #ccc",
               }}
             >
               {item.text}-{item.id}

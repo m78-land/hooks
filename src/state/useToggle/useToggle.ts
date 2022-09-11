@@ -1,5 +1,5 @@
-import { useState } from 'react';
-import { useFn } from '@lxjx/hooks';
+import { useState } from "react";
+import { useFn } from "@m78/hooks";
 
 export function useToggle(init = false) {
   const [toggle, set] = useState(init);
@@ -9,7 +9,7 @@ export function useToggle(init = false) {
       set(next);
       return;
     }
-    set(prev => !prev);
+    set((prev) => !prev);
   });
 
   return [toggle, s] as const;

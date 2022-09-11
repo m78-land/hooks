@@ -1,7 +1,7 @@
-import { useState, useRef } from 'react';
-import { useUpdateEffect } from '@lxjx/hooks';
-import { isFunction, AnyObject, defer } from '@lxjx/utils';
-import _isEqual from 'lodash/isEqual';
+import { useState, useRef } from "react";
+import { useUpdateEffect } from "@m78/hooks";
+import { isFunction, AnyObject, defer } from "@m78/utils";
+import _isEqual from "lodash/isEqual";
 
 /**
  * 表单组件的统一接口
@@ -53,12 +53,20 @@ export function useFormState<T, Ext = any>(
   /** 默认值，会被value与defaultValue覆盖 */
   defaultValue: T,
   /** 其他配置 */
-  config?: UseFormStateConfig,
+  config?: UseFormStateConfig
 ) {
-  const { valueKey = 'value', defaultValueKey = 'defaultValue', triggerKey = 'onChange', deep } =
-    config || {};
+  const {
+    valueKey = "value",
+    defaultValueKey = "defaultValue",
+    triggerKey = "onChange",
+    deep,
+  } = config || {};
 
-  const { [valueKey]: value, [triggerKey]: onChange, [defaultValueKey]: propDefaultValue } = props;
+  const {
+    [valueKey]: value,
+    [triggerKey]: onChange,
+    [defaultValueKey]: propDefaultValue,
+  } = props;
 
   // 用于在一些特定的位置能立即获取到`state
   const stateRef = useRef<T>();
@@ -71,7 +79,8 @@ export function useFormState<T, Ext = any>(
       val = props[valueKey] === undefined ? defaultValue : value;
     }
     if (defaultValueKey in props) {
-      val = props[defaultValueKey] === undefined ? defaultValue : propDefaultValue;
+      val =
+        props[defaultValueKey] === undefined ? defaultValue : propDefaultValue;
     }
 
     return (stateRef.current = val);
@@ -81,7 +90,8 @@ export function useFormState<T, Ext = any>(
   useUpdateEffect(() => {
     if (valueKey in props) {
       if (deep) {
-        !_isEqual(value, stateRef.current) && setState((stateRef.current = value));
+        !_isEqual(value, stateRef.current) &&
+          setState((stateRef.current = value));
       } else {
         value !== stateRef.current && setState((stateRef.current = value));
       }
@@ -94,7 +104,7 @@ export function useFormState<T, Ext = any>(
     const hasValue = valueKey in props;
     if (isFunction(patch)) {
       if (!hasValue) {
-        setState(prev => {
+        setState((prev) => {
           const patchResult = patch(prev);
 
           defer(() => {

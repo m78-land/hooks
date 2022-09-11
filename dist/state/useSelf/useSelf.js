@@ -1,11 +1,10 @@
-import { useRef } from 'react';
+import { useRef } from "react";
 /**
  * 返回一个实例对象
  * @param init - 初始值
  * @return self - 实例对象
- * */
-export function useSelf(init) {
-    if (init === void 0) { init = {}; }
+ * */ export function useSelf() {
+    var init = arguments.length > 0 && arguments[0] !== void 0 ? arguments[0] : {};
     var self = useRef(init);
     return self.current;
 }

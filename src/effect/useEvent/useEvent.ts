@@ -1,14 +1,15 @@
-import { useFn } from '@lxjx/hooks';
-import { useEffect } from 'react';
-import { AnyFunction, CustomEvent, createEvent as create } from '@lxjx/utils';
+import { useFn } from "@m78/hooks";
+import { useEffect } from "react";
+import { AnyFunction, CustomEvent, createEvent as create } from "@m78/utils";
 
-export interface CustomEventWithHook<Listener extends AnyFunction> extends CustomEvent<Listener> {
+export interface CustomEventWithHook<Listener extends AnyFunction>
+  extends CustomEvent<Listener> {
   useEvent(listener: Listener): void;
 }
 
 /** 增强一个现有事件对象 */
 export function enhance<Listener extends AnyFunction = AnyFunction>(
-  event: CustomEvent<Listener>,
+  event: CustomEvent<Listener>
 ): CustomEventWithHook<Listener> {
   const useEvent = (listener: Listener) => {
     const memoHandle = useFn(listener);

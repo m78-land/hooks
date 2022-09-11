@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
 
-import { useFirstMountState } from '@lxjx/hooks';
+import { useFirstMountState } from "@m78/hooks";
 
 const UseFirstMountStateDemo = () => {
   const [count, setCount] = useState(0);
@@ -9,7 +9,9 @@ const UseFirstMountStateDemo = () => {
 
   return (
     <div>
-      <button onClick={() => setCount(prev => prev + 1)}>click {count}</button>
+      <button onClick={() => setCount((prev) => prev + 1)}>
+        click {count}
+      </button>
 
       <hr />
 

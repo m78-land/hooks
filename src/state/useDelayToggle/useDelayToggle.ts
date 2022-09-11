@@ -1,8 +1,8 @@
 /**
  * 将转入的开关状态在指定延迟后转为本地状态并在变更后同步
  * */
-import { useState, useEffect } from 'react';
-import { useSelf } from '@lxjx/hooks';
+import { useState, useEffect } from "react";
+import { useSelf } from "@m78/hooks";
 
 export function useDelayToggle(
   toggle: boolean,
@@ -18,10 +18,15 @@ export function useDelayToggle(
     leading?: boolean;
     /** false | 启用离场延迟 */
     trailing?: boolean;
-  },
+  }
 ): boolean {
-  const { disabled, leadingDelay = delay, trailingDelay = delay, trailing, leading = true } =
-    options || {};
+  const {
+    disabled,
+    leadingDelay = delay,
+    trailingDelay = delay,
+    trailing,
+    leading = true,
+  } = options || {};
 
   const isDisabled = !delay || disabled || (!trailing && !leading);
 

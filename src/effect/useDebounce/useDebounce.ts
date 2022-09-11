@@ -1,6 +1,6 @@
-import { useEffect } from 'react';
-import { AnyFunction, __GLOBAL__ } from '@lxjx/utils';
-import { useSelf, useFn } from '@lxjx/hooks';
+import { useEffect } from "react";
+import { AnyFunction, __GLOBAL__ } from "@m78/utils";
+import { useSelf, useFn } from "@m78/hooks";
 
 /**
  * 传入一个函数，经过防抖处理后返回, 返回函数的内存地址会一直保持不变

@@ -28,7 +28,9 @@ group:
 **conf**
 
 ```ts
-interface UseCheckConf<T, OPTION> extends FormLikeWithExtra<T[], OPTION[]>, UseFormStateConfig {
+interface UseCheckConf<T, OPTION>
+  extends FormLikeWithExtra<T[], OPTION[]>,
+    UseFormStateConfig {
   /** 选项数组 */
   options?: OPTION[];
   /** 所有禁用值 */

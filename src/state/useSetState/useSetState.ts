@@ -1,6 +1,6 @@
-import { useState, useCallback, useRef } from 'react';
-import { SetState, StateInitState } from '@lxjx/hooks';
-import { AnyObject } from '@lxjx/utils';
+import { useState, useCallback, useRef } from "react";
+import { SetState, StateInitState } from "@m78/hooks";
+import { AnyObject } from "@m78/utils";
 
 /**
  * 实现类似react类组件的setState Api
@@ -10,13 +10,13 @@ import { AnyObject } from '@lxjx/utils';
  * @return tuple[1] - 类似类组件的setState，不支持回调
  * */
 export const useSetState = <T extends AnyObject>(
-  initState = {} as StateInitState<T>,
+  initState = {} as StateInitState<T>
 ): [T, SetState<T>] => {
   const [state, set] = useState<T>(initState);
   const ref = useRef(state);
 
   const setState = useCallback(
-    patch => {
+    (patch: any) => {
       const newState = {
         ...state,
         ...(patch instanceof Function ? patch(ref.current) : patch),
@@ -24,7 +24,7 @@ export const useSetState = <T extends AnyObject>(
       ref.current = Object.assign(ref.current, newState);
       set(newState);
     },
-    [set],
+    [set]
   );
 
   return [ref.current, setState];

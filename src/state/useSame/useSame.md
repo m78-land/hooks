@@ -45,6 +45,6 @@ export function useSame<Meta = any>(
     deps?: any[];
     enable?: boolean;
     updateDisabled?: boolean;
-  },
+  }
 ): state;
 ```

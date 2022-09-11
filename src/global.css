@@ -10,7 +10,7 @@
 }
 
 .__dumi-default-menu-logo::after {
-  content: '📌';
+  content: "📌";
 }
 
 .__dumi-default-menu::after {

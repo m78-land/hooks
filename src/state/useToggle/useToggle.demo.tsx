@@ -1,5 +1,5 @@
-import React from 'react';
-import { useToggle } from '@lxjx/hooks';
+import React from "react";
+import { useToggle } from "@m78/hooks";
 
 const UseToggleDemo = () => {
   const [toggle, set] = useToggle(true);

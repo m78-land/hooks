@@ -1,43 +1,53 @@
-import { StateInitState, SetStateBase, useFn } from '@lxjx/hooks';
-import { __GLOBAL__ } from '@lxjx/utils';
-import { useState } from 'react';
+import { StateInitState, SetStateBase, useFn } from "@m78/hooks";
+import { __GLOBAL__ } from "@m78/utils";
+import { useState } from "react";
 
 export interface UseStorageStateOptions {
   /** 缓存类型 */
-  type?: 'local' | 'session';
+  type?: "local" | "session";
   /** false | 是否禁用缓存 */
   disabled?: boolean;
 }
 
-const BASE_KEY = 'USE_STORAGE_CACHE';
+const BASE_KEY = "USE_STORAGE_CACHE";
 
 const storagMethod = {
   local: (__GLOBAL__ as Window).localStorage,
   session: (__GLOBAL__ as Window).sessionStorage,
 };
 
-function setStorage(key: string, val: any, type = 'session' as UseStorageStateOptions['type']) {
+function setStorage(
+  key: string,
+  val: any,
+  type = "session" as UseStorageStateOptions["type"]
+) {
   if (val === undefined) return;
   const method = storagMethod[type!];
   if (!method) return;
   method.setItem(`${BASE_KEY}_${key.toUpperCase()}`, JSON.stringify(val));
 }
 
-function getStorage(key: string, type = 'session' as UseStorageStateOptions['type']) {
+function getStorage(
+  key: string,
+  type = "session" as UseStorageStateOptions["type"]
+) {
   const method = storagMethod[type!];
   if (!method) return;
   const cache = method.getItem(`${BASE_KEY}_${key.toUpperCase()}`);
   return cache === null ? cache : JSON.parse(cache);
 }
 
-function remove(key: string, type = 'session' as UseStorageStateOptions['type']) {
+function remove(
+  key: string,
+  type = "session" as UseStorageStateOptions["type"]
+) {
   const method = storagMethod[type!];
   if (!method) return;
   method.removeItem(`${BASE_KEY}_${key.toUpperCase()}`);
 }
 
 const defaultOptions: Required<UseStorageStateOptions> = {
-  type: 'session',
+  type: "session",
   disabled: false,
 };
 
@@ -47,7 +57,7 @@ function useStorageBase<T = undefined>(
   /** 初始状态 */
   initState?: StateInitState<T>,
   /** 其他选项 */
-  options?: UseStorageStateOptions,
+  options?: UseStorageStateOptions
 ): [T, SetStateBase<T>] {
   const opt = {
     ...defaultOptions,
@@ -72,9 +82,9 @@ function useStorageBase<T = undefined>(
     return initState;
   });
 
-  const memoSetState: SetStateBase<T> = useFn(patch => {
+  const memoSetState: SetStateBase<T> = useFn((patch) => {
     if (patch instanceof Function) {
-      setState(prev => {
+      setState((prev) => {
         const patchRes = patch(prev);
         !opt.disabled && setStorage(key, patchRes, opt.type);
         return patchRes;

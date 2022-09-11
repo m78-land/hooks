@@ -1,5 +1,5 @@
-import React, { useRef, useState } from 'react';
-import { useMeasure } from '@lxjx/hooks';
+import React, { useRef, useState } from "react";
+import { useMeasure } from "@m78/hooks";
 
 const size1 = {
   width: 160,
@@ -29,7 +29,7 @@ const UseMeasureDemo = () => {
 
       <hr />
 
-      <div ref={ref} style={{ border: '1px solid red', ...sty }} />
+      <div ref={ref} style={{ border: "1px solid red", ...sty }} />
     </div>
   );
 };

@@ -19,7 +19,7 @@ group:
 function useThrottle<T extends AnyFunction>(
   fn: T,
   wait = 300,
-  options?: UseThrottleOption,
+  options?: UseThrottleOption
 ): throttleFn;
 
 interface UseThrottleOption {

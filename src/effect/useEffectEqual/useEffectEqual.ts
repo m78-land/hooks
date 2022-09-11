@@ -1,7 +1,7 @@
-import React, { useEffect, useMemo, useRef } from 'react';
-import { usePrev } from '@lxjx/hooks';
-import _isEqualWith from 'lodash/isEqualWith';
-import { IsEqualCustomizer } from 'lodash';
+import React, { useEffect, useMemo, useRef } from "react";
+import { usePrev } from "@m78/hooks";
+import _isEqualWith from "lodash/isEqualWith";
+import { IsEqualCustomizer } from "lodash";
 
 /**
  *  支持对deps进行深度对比的`useEffect`
@@ -13,7 +13,7 @@ import { IsEqualCustomizer } from 'lodash';
 export function useEffectEqual(
   effect: React.EffectCallback,
   deps?: any[],
-  customizer?: IsEqualCustomizer,
+  customizer?: IsEqualCustomizer
 ) {
   const prev = usePrev(deps);
   const dep = useRef(0);

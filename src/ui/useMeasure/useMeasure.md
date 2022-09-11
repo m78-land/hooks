@@ -26,6 +26,6 @@ group:
  * */
 function useMeasure<T>(
   target?: HTMLElement | RefObject<HTMLElement>,
-  debounceDelay?: number,
+  debounceDelay?: number
 ): readonly [DOMRectReadOnly, MutableRefObject<T>];
 ```

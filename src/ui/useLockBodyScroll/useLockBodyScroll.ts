@@ -1,5 +1,5 @@
-import { useEffect, useMemo, useRef } from 'react';
-import { createRandString, hasScroll } from '@lxjx/utils';
+import { useEffect, useMemo, useRef } from "react";
+import { createRandString, hasScroll } from "@m78/utils";
 
 let scrollPosition = 0; // 保存锁定时的滚动位置
 
@@ -44,24 +44,24 @@ export const useLockBodyScroll = (locked: boolean) => {
     const hasX = bodyScrollInfo.x || docScrollInfo.x;
     const hasY = bodyScrollInfo.y || docScrollInfo.y;
 
-    bodyEl.setAttribute('data-locked', '1');
+    bodyEl.setAttribute("data-locked", "1");
     scrollPosition = window.pageYOffset;
-    bodyEl.style.width = '100%';
-    bodyEl.style.overflowY = hasY ? 'scroll' : 'hidden';
-    bodyEl.style.overflowX = hasX ? 'scroll' : 'hidden';
-    bodyEl.style.position = 'fixed';
+    bodyEl.style.width = "100%";
+    bodyEl.style.overflowY = hasY ? "scroll" : "hidden";
+    bodyEl.style.overflowX = hasX ? "scroll" : "hidden";
+    bodyEl.style.position = "fixed";
     bodyEl.style.top = `-${scrollPosition}px`;
   }
 
   function unlock() {
     const bodyEl = instance.current.bodyEl;
 
-    bodyEl.setAttribute('data-locked', '0');
-    bodyEl.style.width = '';
-    bodyEl.style.overflowY = '';
-    bodyEl.style.overflowX = '';
-    bodyEl.style.position = '';
-    bodyEl.style.top = '';
+    bodyEl.setAttribute("data-locked", "0");
+    bodyEl.style.width = "";
+    bodyEl.style.overflowY = "";
+    bodyEl.style.overflowX = "";
+    bodyEl.style.position = "";
+    bodyEl.style.top = "";
     window.scrollTo(0, scrollPosition);
   }
 };

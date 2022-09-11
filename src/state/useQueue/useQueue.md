@@ -21,7 +21,7 @@ group:
 
 ```ts
 function useQueue<Item extends AnyObject = {}>(
-  conf: UseQueueConfig,
+  conf: UseQueueConfig
 ): {
   /**
    * 推入一个或一组新项，如果当前没有选中项且非手动模式，自动执行next()

@@ -1,6 +1,6 @@
-import { useEffect, useMemo, useRef } from 'react';
-import { isArray } from '@lxjx/utils';
-import { DomTarget, getTargetDomList, useFn } from '@lxjx/hooks';
+import { useEffect, useMemo, useRef } from "react";
+import { isArray } from "@m78/utils";
+import { DomTarget, getTargetDomList, useFn } from "@m78/hooks";
 
 export interface UseClickAwayConfig {
   /** 触发回调, e取决于events配置, 用户可根据events自行进行类型断言 */
@@ -11,16 +11,20 @@ export interface UseClickAwayConfig {
   events?: string[];
 }
 
-const defaultEvents = ['mousedown', 'touchstart'];
+const defaultEvents = ["mousedown", "touchstart"];
 
-export function useClickAway({ target, events = defaultEvents, onTrigger }: UseClickAwayConfig) {
+export function useClickAway({
+  target,
+  events = defaultEvents,
+  onTrigger,
+}: UseClickAwayConfig) {
   const ref = useRef<any>();
   const domList = useRef<HTMLElement[]>([]);
 
-  const handle: EventListener = useFn(e => {
+  const handle: EventListener = useFn((e) => {
     if (!domList.current.length) return;
 
-    const isInner = domList.current.some(dom => {
+    const isInner = domList.current.some((dom) => {
       return dom.contains(e.target as Node);
     });
 
@@ -44,8 +48,11 @@ export function useClickAway({ target, events = defaultEvents, onTrigger }: UseC
   }, events);
 
   function bindHelper(isOff = false) {
-    events!.forEach(eventKey => {
-      document[isOff ? 'removeEventListener' : 'addEventListener'](eventKey, handle);
+    events!.forEach((eventKey) => {
+      document[isOff ? "removeEventListener" : "addEventListener"](
+        eventKey,
+        handle
+      );
     });
   }
 

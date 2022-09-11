@@ -1,12 +1,12 @@
-import React from 'react';
-import { useFetch } from '@lxjx/hooks';
+import React from "react";
+import { useFetch } from "@m78/hooks";
 
 /**
  * 模拟一个基于Promise的请求函数
  */
 
 function mockFn(payload: string) {
-  return new Promise(resolve => {
+  return new Promise((resolve) => {
     setTimeout(() => {
       resolve({ code: 0, msg: `您输入的值是: ${payload}` });
     }, 300);
@@ -14,12 +14,20 @@ function mockFn(payload: string) {
 }
 
 const ThrottleDebounceDemo = () => {
-  const { data: data1, loading: loading1, send: send1 } = useFetch(mockFn, {
+  const {
+    data: data1,
+    loading: loading1,
+    send: send1,
+  } = useFetch(mockFn, {
     throttleInterval: 1000,
     manual: true,
   });
 
-  const { data: data2, loading: loading2, send: send2 } = useFetch(mockFn, {
+  const {
+    data: data2,
+    loading: loading2,
+    send: send2,
+  } = useFetch(mockFn, {
     debounceInterval: 300,
     manual: true,
   });
@@ -31,7 +39,7 @@ const ThrottleDebounceDemo = () => {
       <div>
         输入关键词
         <input type="text" onChange={({ target }) => send1(target.value)} />
-        {loading1 && 'loading...'}
+        {loading1 && "loading..."}
         <p>{data1 && JSON.stringify(data1)}</p>
       </div>
 
@@ -40,7 +48,7 @@ const ThrottleDebounceDemo = () => {
       <div>
         输入关键词
         <input type="text" onChange={({ target }) => send2(target.value)} />
-        {loading2 && 'loading...'}
+        {loading2 && "loading..."}
         <p>{data2 && JSON.stringify(data2)}</p>
       </div>
     </div>

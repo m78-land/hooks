@@ -30,12 +30,12 @@ function useStorageBase<T = undefined>(
   /** 初始状态 */
   initState?: StateInitState<T>,
   /** 其他选项 */
-  options?: UseStorageStateOptions,
+  options?: UseStorageStateOptions
 ): [
   /** 状态 */
   T,
   /** 设置状态  */
-  SetStateBase<T>,
+  SetStateBase<T>
 ];
 ```
 
@@ -44,7 +44,7 @@ function useStorageBase<T = undefined>(
 ```ts
 interface UseStorageStateOptions {
   /** 缓存类型 */
-  type?: 'local' | 'session';
+  type?: "local" | "session";
   /** false | 是否禁用缓存 */
   disabled?: boolean;
 }

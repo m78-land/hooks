@@ -18,7 +18,11 @@ group:
 ## API
 
 ```ts
-function useEffectEqual(effect: React.EffectCallback, deps?: any[], customizer?: IsEqualCustomizer);
+function useEffectEqual(
+  effect: React.EffectCallback,
+  deps?: any[],
+  customizer?: IsEqualCustomizer
+);
 ```
 
 **effect** - 同 useEffect 参数 1

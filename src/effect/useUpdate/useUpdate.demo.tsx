@@ -1,5 +1,5 @@
-import React from 'react';
-import { useUpdate } from '@lxjx/hooks';
+import React from "react";
+import { useUpdate } from "@m78/hooks";
 
 const UseUpdateDemo = () => {
   const update = useUpdate();

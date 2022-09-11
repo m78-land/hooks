@@ -1,11 +1,11 @@
-import React, { useState } from 'react';
-import { useDerivedStateFromProps } from '@lxjx/hooks';
+import React, { useState } from "react";
+import { useDerivedStateFromProps } from "@m78/hooks";
 
 function Demo({ num }: any) {
   const [insideNum, setInsideNum] = useDerivedStateFromProps(num);
 
   return (
-    <div style={{ margin: '20px 0' }}>
+    <div style={{ margin: "20px 0" }}>
       <h3>基本类型 - </h3>
       <div>传入prop: {num}</div>
       <div>派生state: {insideNum}</div>
@@ -18,7 +18,7 @@ function Demo2({ obj }: any) {
   const [insideObj, setInsideObj] = useDerivedStateFromProps(obj);
 
   return (
-    <div style={{ margin: '20px 0' }}>
+    <div style={{ margin: "20px 0" }}>
       <h3>引用类型 - </h3>
       <div>传入prop: {JSON.stringify(obj, null, 4)}</div>
       <div>派生state: {JSON.stringify(insideObj, null, 4)}</div>

@@ -1,6 +1,5 @@
 /lib
+/umd
+/esm
 /dist
 /public
-/build
-/config
-/src/components/*/style/**

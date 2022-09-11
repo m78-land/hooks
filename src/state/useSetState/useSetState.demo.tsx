@@ -1,9 +1,9 @@
-import React from 'react';
+import React from "react";
 
-import { useSetState } from '@lxjx/hooks';
+import { useSetState } from "@m78/hooks";
 
 const UseSetStateDemo = () => {
-  const [state, setState] = useSetState({ count: 0, other: 'lxj' });
+  const [state, setState] = useSetState({ count: 0, other: "lxj" });
 
   const clickHandle = React.useCallback(() => {
     setState({ count: state.count + 1 });

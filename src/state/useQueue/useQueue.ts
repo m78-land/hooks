@@ -1,7 +1,7 @@
-import { AnyObject, createRandString, isArray, isNumber } from '@lxjx/utils';
-import { useFn, useSelf, useSetState, useUpdate } from '@lxjx/hooks';
-import _differenceBy from 'lodash/differenceBy';
-import { useEffect } from 'react';
+import { AnyObject, createRandString, isArray, isNumber } from "@m78/utils";
+import { useFn, useSelf, useSetState, useUpdate } from "@m78/hooks";
+import _differenceBy from "lodash/differenceBy";
+import { useEffect } from "react";
 
 type IDType = string | number;
 
@@ -32,7 +32,12 @@ interface UseQueueItemWidthId extends UseQueueItem {
  * */
 
 function useQueue<Item extends AnyObject = {}>(
-  { defaultItemOption, list = [], defaultManual = false, onChange } = {} as UseQueueConfig<Item>,
+  {
+    defaultItemOption,
+    list = [],
+    defaultManual = false,
+    onChange,
+  } = {} as UseQueueConfig<Item>
 ) {
   /** 选项与用户扩展类型混合 */
   type MixItem = Item & UseQueueItem;
@@ -134,7 +139,7 @@ function useQueue<Item extends AnyObject = {}>(
    * */
   const push = useFn((opt: MixItem | MixItem[]) => {
     if (isArray(opt)) {
-      const ls = opt.map(item => ({
+      const ls = opt.map((item) => ({
         ...defaultItemOption,
         id: createRandString(),
         ...item,
@@ -180,8 +185,8 @@ function useQueue<Item extends AnyObject = {}>(
     const diffList = (ls: MixItemWithId[]) =>
       _differenceBy(
         ls,
-        ids.map(item => ({ id: item })),
-        item => item.id,
+        ids.map((item) => ({ id: item })),
+        (item) => item.id
       );
 
     self.oldList = diffList(self.oldList);
@@ -310,7 +315,7 @@ function useQueue<Item extends AnyObject = {}>(
    * */
   function findIndexById(id: IDType) {
     const all = getAllList();
-    return all.findIndex(item => item.id === id);
+    return all.findIndex((item) => item.id === id);
   }
 
   /**

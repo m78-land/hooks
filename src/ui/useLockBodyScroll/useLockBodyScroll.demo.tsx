@@ -1,5 +1,5 @@
-import React from 'react';
-import { useLockBodyScroll, useToggle } from '@lxjx/hooks';
+import React from "react";
+import { useLockBodyScroll, useToggle } from "@m78/hooks";
 
 const UseLockBodyScrollDemo = () => {
   const [bool, set] = useToggle(false);

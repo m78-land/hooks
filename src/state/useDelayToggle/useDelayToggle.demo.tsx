@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { useDelayToggle } from './useDelayToggle';
+import React, { useState } from "react";
+import { useDelayToggle } from "@m78/hooks";
 
 const useDelayToggleDemo = () => {
   const [loading, setLoading] = useState(false);
