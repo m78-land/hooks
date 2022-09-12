@@ -1,6 +1,6 @@
 {
   "name": "@m78/hooks",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "Use Your Imagination",
   "keywords": [
     "react",
@@ -19,7 +19,7 @@
     "email": "1073830130@qq.com"
   },
   "devDependencies": {
-    "@m78/build-tools": "^0.0.7",
+    "@m78/build-tools": "^0.0.8",
     "dumi": "^1.1.47"
   },
   "dependencies": {
@@ -30,7 +30,8 @@
     "query-string": "^7.1.1",
     "react": "^18.2.0",
     "react-spring": "^9.5.2",
-    "resize-observer-polyfill": "^1.5.1"
+    "resize-observer-polyfill": "^1.5.1",
+    "@swc/helpers": "^0.4.11"
   },
   "scripts": {
     "lint:prettier": "prettier ./src ./test --write --no-error-on-unmatched-pattern",
