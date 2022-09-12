@@ -1,4 +1,4 @@
-import "./app.d";
+/// <reference types="src/app" />
 export * from "./effect/useEvent/useEvent";
 export * from "./effect/useDebounce/useDebounce";
 export * from "./effect/useEffectEqual/useEffectEqual";

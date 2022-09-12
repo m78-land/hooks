@@ -1,4 +1,5 @@
-import "./app.d";
+// eslint-disable-next-line @typescript-eslint/triple-slash-reference
+/// <reference path="./app.d.ts" />
 /* effect */ export * from "./effect/useEvent/useEvent";
 export * from "./effect/useDebounce/useDebounce";
 export * from "./effect/useEffectEqual/useEffectEqual";
